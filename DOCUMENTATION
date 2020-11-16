@@ -1,0 +1,83 @@
+Interpreter behavior:
+
+1. Error handling:
+    Print in console context-free and context sensitive error in form of:
+    Violation of: <NODENAME> + syntax error, + <TOKEN> expected
+    However, the interpreter will not stop (I didn't call system.exit()). It continues to interpret.
+    Only if in program node an error is found, the program will call system.exit(0), and stop.
+    During execution, if there is error, then the interpreter stops immediately.
+    
+    For example, if in the decl seq, a variable name appeared twice, interpreter will print in console:
+    Compile error: occurance of undeclared variable in statement.
+    
+    If the program end unexpectedly (no 'end' at the end of the program or incorrect syntax after a full statement),
+    print in console:
+    statement sequence node error, the end of all statements is not found.
+    
+    Also, all id in program must be declared before 'begin'
+
+    Even if the core program have compile time error, the parseProg() method will run with printing and executing in console, 
+    and Interpreter proceed to the run the printProg() method, which pretty print the core program. 
+
+    During run-time, 
+    if an expression evaluated to less than 0 after subtraction, 
+    if an uninitialized expression appeared on the right side of assignment operator,
+    if an uninitialized expression appeared in compare operation,
+    interpreter will print in console the corresponding error.
+    
+    use a third args of doNotPrint to skip printProg();
+    
+    Example input and output:
+    
+INPUT:    
+/data/test01
+program int X,Y,Z1,Q,P; begin read Q,P;Z1= 12*(11-5); Y=Z1*X; 
+write P,Q;
+end
+/data/test01data
+1
+4
+32
+
+RESULT IN CONSOLE:
+program 
+    int X,Y,Z1,Q,P; 
+begin 
+    read Q,P;
+    Z1=12*(11-5);
+    Y=Z1*X;
+    write P,Q;
+end
+Run-time error: uninitialized variableX
+P=4,Q=1
+
+
+
+
+2. General behavior:
+    Interpreter used object oriented approach and is for core language:
+    <prog> ::= program <decl seq> (1)
+    begin <stmt seq> end
+    <decl seq> ::= <decl> | <decl> <decl seq> (2)
+    <stmt seq> ::= <stmt> | <stmt> <stmt seq> (3)
+    <decl> ::= int <id list>; (4)
+    <id list> ::= <id> | <id>, <id list> (5)
+    <stmt> ::= <assign>|<if>|<loop>|<in>|<out>(6)
+    <assign> ::=<id> = <exp>; (7)
+    <if> ::= if <cond> then <stmt seq> end; (8)
+    |if <cond> then <stmt seq> else <stmt seq> end;
+    <loop> ::= while <cond> loop <stmt seq> end; (9)
+    <in> ::= read <id list>; (10)
+    <out> ::= write <id list>; (11)
+    <cond> ::= <comp>|!<cond> (12)
+    | [<cond> && <cond>] | [<cond> or <cond>]
+    <comp> ::= (<op> <comp op> <op>) (13)
+    <exp> ::= <trm>|<trm>+<exp>|<trm>−<exp> (14)
+    <trm> ::= <op> | <op> * <trm> (15)
+    <op> ::= <no> | <id> | (<exp>) (16)
+    <comp op> ::= != | == | < | > | <= | >= (17)
+    <id> ::= <let> | <let><id> | <let><no> (18)
+    <let>::=A | B | C | ... | X | Y | Z (19)
+    <no>::=<digit> | <digit><no> (20)
+    <digit>::=0 | 1 | 2 | 3 | ... | 9 (21)
+    

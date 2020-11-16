@@ -1,0 +1,26 @@
+List of folders and files
+
+README
+    this file
+
+Runfile
+    The requested file showing how to run the program from the command
+    line (without the required argument)
+    
+DOCUMENTATION
+    A brief description of interpreter behavior, please see it for handling of incorrect core program.
+    
+src/edu/c3341/Tokenizer.java
+    The Tokenizer interface (Java source)
+src/edu/c3341/TokenKind.java
+    TokenKind enum for a "subset" of the Core language tokens (Java source)
+src/edu/c3341/Tokenizer1.java
+    Tokenizer1 class implementing Tokenizer for a "subset" of the Core
+    language tokens (Java source)
+src/edu/c3341/<NODENAME>.java
+    Please see in first line of comment in each class of nodes for their description.
+    In general, each such class implement a node type, consist of a constructor, parseXX(), printXX(), and execXX90 method.
+    Except for id class.
+src/edu/c3341/PrettyPrintHelper.java
+    A helper class for indentation handling. 
+    
